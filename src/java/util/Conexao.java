@@ -13,7 +13,7 @@ public class Conexao
 	private String driver = "org.postgresql.Driver";
 	private String dbURL = "jdbc:postgresql://localhost:5432/agenda";
 	private String login = "postgres";
-        private String password = "SENHA";
+                      private String password = "postgree";
 
 
     public Conexao()

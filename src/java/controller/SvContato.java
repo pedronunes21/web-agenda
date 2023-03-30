@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
 import jakarta.servlet.ServletException;
@@ -9,23 +5,22 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+import model.Contato;
+import model.DAOContato;
 
 /**
  *
  * @author Pedro
  */
 public class SvContato extends HttpServlet {
+    
+    private DAOContato dc;
+    
+    @Override
+    public void init() {
+        dc = new DAOContato();
+    }
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -33,11 +28,18 @@ public class SvContato extends HttpServlet {
         String sEmail = request.getParameter("email");
         String sCel = request.getParameter("celular");
         
-           response.sendRedirect("index.jsp?r=Recebi os Dados!"+sNome+", "+sEmail+", " + sCel);
+        Contato c = new Contato();
         
-        try (PrintWriter out = response.getWriter()) {
-            
-        }
+        c.setNome(sNome);
+        c.setEmail(sEmail);
+        c.setTelefone(sCel);
+        
+        int id = dc.inserir(c);
+        
+        response.sendRedirect("index.jsp?r=Contato Inserido; ID:" + id);
+        
+        
+
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
